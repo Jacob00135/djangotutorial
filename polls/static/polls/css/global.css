@@ -1,0 +1,65 @@
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+body {
+    margin: 0;
+    padding-top: 80px;
+    background-color: #18181a;
+    /*background: #18181a url("/static/polls/images/xfce-wallpapers.jpeg") repeat fixed top left;*/
+    background-size: 100%;
+}
+
+#main {
+    width: 80%;
+    min-width: 300px;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 400px) {
+    #main {
+        width: 100%;
+    }
+}
+
+#main > #back_to_index {
+    display: block;
+    width: 180px;
+    height: 24px;
+    padding: 13px 0;
+    border-radius: 4px;
+    background-color: transparent;
+}
+
+#main > #back_to_index:hover {
+    background-color: rgba(64, 64, 64, 0.2);
+}
+
+#main > #back_to_index svg {
+    float: left;
+    width: 24px;
+    fill: #7b8ba4;
+}
+
+#main > #back_to_index .text {
+    float: left;
+    height: 24px;
+    margin-left: 14px;
+    font-size: 16px;
+    color: #b7b7b7;
+}

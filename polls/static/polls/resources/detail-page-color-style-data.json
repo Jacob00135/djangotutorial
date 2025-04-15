@@ -1,0 +1,49 @@
+{
+    "globalFontColor": {
+        "cssSelector": [
+            "#main > h1",
+            "#main #choice_form #choice_list > .choice-item > .text",
+            "#main #choice_form #submit_choice"
+        ],
+        "key": "color",
+        "value": "#b7b7b7"
+    },
+    "titleBackgroundColor": {
+        "cssSelector": [
+            "#main > h1",
+            "#main > .subtitle"
+        ],
+        "key": "background-color",
+        "value": "#3f4c66"
+    },
+    "choiceBackgroundColor": {
+        "cssSelector": ["#main #choice_form #choice_list > .choice-item"],
+        "key": "background-color",
+        "value": "#2e3440"
+    },
+    "choiceHoverBackgroundColor": {
+        "cssSelector": ["#main #choice_form #choice_list > .choice-item:hover"],
+        "key": "background-color",
+        "value": "#3f4c66"
+    },
+    "choiceBorderColor": {
+        "cssSelector": ["#main #choice_form #choice_list > .choice-item > .text"],
+        "key": "border-color",
+        "value": "#304157"
+    },
+    "choiceVotePercentProgressBackgroundColor": {
+        "cssSelector": ["#main #choice_form #choice_list > .choice-item > .vote-percent-progress"],
+        "key": "background-color",
+        "value": "#2e2234"
+    },
+    "submitBackgroundColor": {
+        "cssSelector": ["#main #choice_form #submit_choice"],
+        "key": "background-color",
+        "value": "#204e8a"
+    },
+    "submitHoverBackgroundColor": {
+        "cssSelector": ["#main #choice_form #submit_choice:hover"],
+        "key": "background-color",
+        "value": "#1f5fb3"
+    }
+}

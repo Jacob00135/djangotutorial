@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>投票应用问题列表</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/css/global.css' %}"/>
+    <link rel="stylesheet" href="{% static 'polls/css/index.css' %}"/>
+</head>
+<body>
+
+<div id="main">
+    <h1>投票问题列表</h1>
+
+    {% if question_detail %}
+        <ul id="question_list" class="clearfix">
+        {% for d in question_detail %}
+            <li class="question-item">
+                <a class="link" href="{% url 'polls:detail' d.question_id %}">
+                    <div class="text">{{ d.question_text }}</div>
+                    <div class="info">
+                        <div class="vote-number">已投票：{{ d.vote_count }}</div>
+                        <div class="published-date">{{ d.published_date }}</div>
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p id="blank_text">目前没有可用问题</p>
+    {% endif %}
+</div>
+
+<script text="text/javascript" src="{% static 'polls/js/global.js' %}"></script>
+<script text="text/javascript" src="{% static 'polls/js/index.js' %}"></script>
+
+</body>
+</html>

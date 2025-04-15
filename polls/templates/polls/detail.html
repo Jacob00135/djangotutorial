@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>{{ question_text }}</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/css/global.css' %}"/>
+    <link rel="stylesheet" href="{% static 'polls/css/detail.css' %}"/>
+
+    <script text="text/javascript" src="{% static 'polls/js/global.js' %}"></script>
+    <script type="text/javascript">
+        (() => {
+            const baseUrl = "{% url 'polls:user_voted' %}";
+            const questionId = {{ question_id }};
+            const uuid = getUUID();
+            const url = `${baseUrl}?question_id=${questionId}&uuid=${uuid}`;
+
+            fetch(url).then((response) => {
+                console.log(`请求成功，状态码：${response.status}`);
+                return response.json()
+            }, (error) => {
+                console.log('请求失败');
+                console.log(error);
+                return null;
+            }).then((response) => {
+                if (response === null || response.status !== 1) {
+                    return undefined;
+                }
+                {% if is_result_page == True %}
+                const isResultPage = true;
+                {% else %}
+                const isResultPage = false;
+                {% endif %}
+                if (response.data && !isResultPage) {
+                    location.assign("{% url 'polls:results' question_id %}");
+                } else if (!response.data && isResultPage) {
+                    location.assign("{% url 'polls:detail' question_id %}");
+                }
+            });
+        })();
+    </script>
+</head>
+<body>
+
+{% if error_message %}
+<div id="error_message" class="hidden">{{ error_message }}</div>
+{% endif %}
+
+{% if is_result_page == True %}
+<div id="is_result_page" data-is-result-page="1"></div>
+{% else %}
+<div id="is_result_page" data-is-result-page="0"></div>
+{% endif %}
+
+<div id="main" data-color-style-data-url="{% static 'polls/resources/detail-page-color-style-data.json' %}">
+    <a id="back_to_index" href="{% url 'polls:index' %}" >
+        <svg viewBox="0 0 690 719"><path d="M689.13 466V251c0-26-19-45-45-45h-250V36c0-16-8-27-22-34c-5-1-10-2-14-2c-10 0-18 3-24 10l-324 324c-14 12-13 36 0 50l324 324c20 22 60 7 60-26V510h250c26 0 45-18 45-44"/></svg>
+        <div class="text">返回问题列表页面</div>
+    </a>
+
+    <h1>{{ question_text }}</h1>
+    {% if is_result_page %}
+    <h3 class="subtitle">投票结果 (截至{{ question_end_time }})</h3>
+    {% endif %}
+
+    <form id="choice_form" method="post" action="{% url 'polls:vote' question_id %}">
+        {% csrf_token %}
+        <ul id="choice_list">
+        {% for d in choice_detail %}
+            <li class="choice-item">
+                {% if is_result_page %}
+                <label class="text disabled">{{ d.choice_text }}</label>
+                <div class="vote-percent-progress" data-percent="{{ d.choice_vote_percent }}"></div>
+                <div class="vote-text-box">
+                    <div class="vote-count">票数：{{ d.choice_votes }}</div>
+                    <div class="vote-percent">{{ d.choice_vote_percent }}</div>
+                </div>
+                {% else %}
+                <label for="choice_{{ d.choice_id }}" class="text">{{ d.choice_text }}</label>
+                <input type="radio" id="choice_{{ d.choice_id }}" class="radio"  name="choice" value="{{ d.choice_id }}" required autocomplete="off" />
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+
+        {% if not is_result_page %}
+        <input type="submit" id="submit_choice" value="确定" />
+        {% endif %}
+
+    </form>
+
+</div>
+
+<!-- 额外内容 -->
+<!--
+<div id="global_gif">
+    <style>
+        #global_gif {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            opacity: 0.5;
+        }
+
+        @media screen and (max-width: 960px) {
+            #global_gif img {
+                width: 180px;
+            }
+        }
+
+        @media screen and (max-width: 540px) {
+            #global_gif img {
+                width: 90px;
+            }
+        }
+    </style>
+    <img src="{% static 'polls/images/global_gif.webp' %}" />
+</div>
+-->
+<script text="text/javascript" src="{% static 'polls/js/detail.js' %}"></script>
+
+</body>
+</html>

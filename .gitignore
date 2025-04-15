@@ -1,0 +1,7 @@
+**/.idea
+**/__pycache__
+venv
+connect_db.sh
+db.sqlite3
+app.log
+start.sh
